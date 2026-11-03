@@ -119,6 +119,8 @@ ol a:hover small,ol a:focus-visible small,ol a:hover .m,ol a:focus-visible .m,.s
 .bar{border:2px solid var(--navy);background:#fff;padding:2px;border-radius:3px}.bar i{background:repeating-linear-gradient(90deg,var(--sky3) 0 8px,transparent 8px 10px)}
 .sticker{position:absolute;right:14px;top:62px;background:var(--red);color:#fff;font:14px/1 "DotGothic16",monospace;padding:7px 11px;border-radius:999px;transform:rotate(4deg);box-shadow:2px 2px 0 var(--navy)}
 .ig{font:clamp(50px,14vw,76px)/1 "DotGothic16",monospace;margin-top:30px;color:var(--navy)}
+.fly{position:absolute;pointer-events:none;color:var(--navy)}.fly svg{width:100%;height:100%;display:block;fill:currentColor}.f1{width:44px;height:20px;left:3%;top:79%;transform:rotate(-18deg);animation:fl 3.2s ease-in-out infinite}.f2{width:36px;height:17px;left:34%;top:30%;transform:rotate(-18deg);animation:fl 3.2s ease-in-out -1.6s infinite;color:#E0303F}.sp1{width:16px;height:16px;right:7%;top:62%;animation:tw 1.8s steps(2) infinite}.sp2{width:6px;height:6px;left:22%;top:34%;animation:tw 1.4s steps(2) -.7s infinite}.kao{font-family:-apple-system,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Noto Sans",sans-serif;font-size:.85em;margin-left:2px}@keyframes fl{0%,100%{translate:0 0}50%{translate:10px -6px}}@media (prefers-reduced-motion:reduce){.fly{animation:none}}
+.hk{animation:hk 1.6s steps(3) infinite;transform-origin:center}.hk:nth-of-type(3){animation-delay:-.5s}.hk:nth-of-type(4){animation-delay:-1.1s}@keyframes hk{0%,100%{opacity:1;transform:scale(1)}33%{opacity:.35;transform:scale(.6)}66%{opacity:1;transform:scale(1.25)}}.sp1,.sp2{transform-origin:center}@keyframes tw{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.25;transform:scale(.55)}}@media (prefers-reduced-motion:reduce){.hk{animation:none}}
 .ig:hover,.ig:focus-visible{color:#0D4FA0;outline:none}
 footer{font:14px/1.4 "DotGothic16",monospace;color:var(--navy)}
 .hk{position:absolute;color:#fff;filter:drop-shadow(0 0 2px rgba(47,143,216,.9))}
@@ -203,8 +205,9 @@ footer{font:14px/1.4 "DotGothic16",monospace;color:var(--navy)}
   <span class="bar" aria-hidden="true"><i></i></span>
 </section>
 <section class="scr">
-  <div class="label"><span>Say hi on</span><span class="jp">インスタグラム</span></div>
+  <div class="label"><span>Say hi on</span><span class="jp">インスタグラム<span class="kao">✴︎(๑˃̵ᴗ˂̵)</span></span></div>
   <span class="sticker">DM for socials</span>
+  <span class="fly f1" aria-hidden="true"><svg viewBox="0 0 15 7" shape-rendering="crispEdges"><path d="M11 0h1v2h-1zM11 5h1v2h-1zM8 3h2v1H8zM13 3h2v1h-2zM10 2h3v3h-3zM5 3h2v1H5zM2 3h1v1H2zM0 3h1v1H0z"/></svg></span><span class="fly f2" aria-hidden="true"><svg viewBox="0 0 15 7" shape-rendering="crispEdges"><path d="M11 0h1v2h-1zM11 5h1v2h-1zM8 3h2v1H8zM13 3h2v1h-2zM10 2h3v3h-3zM5 3h2v1H5zM2 3h1v1H2zM0 3h1v1H0z"/></svg></span><span class="fly sp1" aria-hidden="true"><svg viewBox="0 0 5 5" shape-rendering="crispEdges"><path d="M2 0h1v5H2zM0 2h5v1H0z"/></svg></span><span class="fly sp2" aria-hidden="true"><svg viewBox="0 0 1 1" shape-rendering="crispEdges"><path d="M0 0h1v1H0z"/></svg></span>
   <a class="ig" href="https://www.instagram.com/shizukajasmin/" target="_blank" rel="noopener">@shizuka<br>&nbsp;&nbsp;jasmin ↗</a>
 </section>
 <footer><span>© SHIZUKA JASMIN</span><span>shot on film, mostly</span></footer>
