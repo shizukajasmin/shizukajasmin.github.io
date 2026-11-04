@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en"><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SHIZUKA JASMIN — VCR A2_play (mockup)</title>
+<meta name="description" content="SHIZUKA JASMIN — Tokyo model &amp; writer — fashion, slow living and sustainability, in two languages.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=VT323&display=swap" rel="stylesheet"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0a1240}
+body{overflow:hidden;color:#fff;font:24px/1.15 "VT323",ui-monospace,monospace;-webkit-font-smoothing:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+.tv{position:fixed;inset:0;overflow:hidden;background:var(--blue)}
+.bg{position:absolute;inset:0;background:var(--bgimg)}
+.tv::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;
+ background:repeating-linear-gradient(0deg,rgba(0,0,30,.22) 0 1px,transparent 1px 3px),radial-gradient(120% 90% at 50% 50%,transparent 60%,rgba(0,0,40,.45))}
+#noise{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;pointer-events:none;z-index:6;opacity:var(--nop,.85)}
+.osd{position:absolute;inset:0;pointer-events:none;z-index:7;font-size:clamp(22px,5.6vw,32px);line-height:1.02;text-shadow:var(--osdsh)}
+.c{position:absolute;display:flex;flex-direction:column;gap:1px;letter-spacing:.04em}
+.tl{left:16px;top:12px}.tr{right:16px;top:12px;align-items:flex-end}
+.tc{left:50%;top:14px;transform:translateX(-50%);font-size:1.25em}
+.bl{left:16px;bottom:14px}.br{right:16px;bottom:14px;align-items:flex-end}
+.tc .ff{display:none}.tv.ffw .tc .ff{display:inline}.tv.ffw .tc .play{display:none}
+.rec{display:flex;align-items:center;gap:6px}
+.dot{width:.42em;height:.42em;border-radius:50%;background:var(--recdot);box-shadow:0 0 6px var(--recdot)}
+.tv.blink .dot{visibility:hidden}
+.mode b{font-weight:400}
+.tri{display:inline-block;width:.46em;height:.6em;background:currentColor;margin:0 .14em;vertical-align:-.02em}
+.tri.r{clip-path:polygon(0 0,100% 50%,0 100%)}
+.tri.l{clip-path:polygon(100% 0,0 50%,100% 100%)}
+.tri.u{clip-path:polygon(50% 0,100% 100%,0 100%);width:.6em;height:.5em}
+.tri.d{clip-path:polygon(0 0,100% 0,50% 100%);width:.6em;height:.5em}
+.tri.big{width:.55em;height:.75em;margin:0}
+.stage{position:absolute;inset:0;z-index:5;overflow-y:auto;overflow-x:hidden;padding:118px 18px 96px;will-change:transform}
+.screen{display:none;min-height:100%;flex-direction:column}
+.screen.on{display:flex}
+html:not(.js) .screen{display:flex;min-height:0;margin-bottom:60px}
+html:not(.js) body{overflow:auto}html:not(.js) .tv,html:not(.js) .stage{position:static}
+.wrap{margin:auto;width:100%;max-width:720px}
+.welcome{font-weight:400;font-size:clamp(50px,18.6vw,128px);line-height:.92;letter-spacing:.02em;text-align:center;text-shadow:var(--bigsh);display:flex;flex-direction:column}
+.jpw{margin-top:18px;text-align:center;font:clamp(16px,4.3vw,24px)/1.4 "DotGothic16",sans-serif;text-shadow:var(--osdsh)}
+.press{display:flex;align-items:center;justify-content:center;gap:8px;margin:34px auto 0;min-height:58px;padding:6px 22px 4px;font-size:clamp(30px,8vw,44px);letter-spacing:.08em;border:3px solid currentColor;text-shadow:var(--osdsh);box-shadow:var(--osdbox)}
+.tv.pblink .press{color:transparent;border-color:transparent;box-shadow:none;text-shadow:none}.tv.pblink .press .tri{background:transparent}
+.press.pressed,.press:active{background:var(--hl);color:var(--hltx);text-shadow:none}
+.hd{display:flex;align-items:center;gap:12px;font-weight:400;font-size:clamp(30px,8vw,44px);letter-spacing:.08em;margin-bottom:6px;text-shadow:var(--osdsh)}
+.hd i{flex:1;min-width:30px;height:4px;background:repeating-linear-gradient(90deg,currentColor 0 12px,transparent 12px 20px)}
+.hd span{text-align:center;max-width:80%}
+.sec .hd{font-size:clamp(26px,7vw,40px)}
+.who{text-align:center;font-size:20px;opacity:.85;margin-bottom:12px;letter-spacing:.06em}
+.who span{font:14px "DotGothic16",sans-serif;margin-left:6px}
+.list{display:flex;flex-direction:column;gap:4px}
+.mi{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:50px;padding:6px 12px 4px;font-size:clamp(28px,7.4vw,40px);letter-spacing:.05em;text-shadow:var(--osdsh)}
+.mi .tri{opacity:0}
+.mi.sel,.row.sel{background:var(--hl);color:var(--hltx);text-shadow:none;box-shadow:var(--hlsh)}
+.mi.sel .tri{opacity:1}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:10px;align-items:center;width:100%;min-height:56px;padding:8px 12px 7px;text-shadow:var(--osdsh);outline:none}
+.row .t{font-size:clamp(25px,6.6vw,34px);line-height:1;grid-column:1}
+.row small{grid-column:1;font:13.5px/1.45 "DotGothic16",sans-serif;margin-top:4px;opacity:.95}
+.row small.en{font:17px/1.25 "VT323",monospace}
+.row .m{grid-column:2;grid-row:1/span 3;font-size:20px;text-align:right;max-width:5.4em;line-height:1}
+.row.home .m{grid-row:auto;grid-column:1;text-align:left;max-width:none;order:-1;font-size:17px;opacity:.8;margin-bottom:4px}
+.row.home .t{font-size:clamp(28px,8vw,40px);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.row.back{display:flex;align-items:center;font-size:clamp(25px,6.6vw,34px);margin-top:8px;letter-spacing:.05em}
+.row.nolink{cursor:default}
+.mi:focus,.row:focus{outline:none}
+.foot{display:flex;flex-direction:column;margin:20px auto 0;width:max-content;max-width:100%;font-size:clamp(20px,5.2vw,28px);white-space:pre;letter-spacing:.03em;text-shadow:var(--osdsh);opacity:.95}
+.foot .tri{margin:0 .06em}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (min-width:900px){.stage{padding:130px 40px 110px}.c.tl,.c.bl{left:34px}.c.tr,.c.br{right:34px}.c.tl,.c.tr{top:24px}.c.bl,.c.br{bottom:24px}}
+@media (prefers-reduced-motion:reduce){#noise{display:none}}
+
+:root{--blue:#2B4FD6;--bgimg:linear-gradient(180deg,#2D52DC,#2848CE 60%,#2443C2);--hl:#DCE2EE;--hltx:#2140C4;--hlsh:none;--recdot:#ff3b3b;
+--osdsh:0 0 3px rgba(255,255,255,.5),2px 2px 0 rgba(10,20,90,.55);--osdbox:0 0 4px rgba(255,255,255,.35),inset 0 0 4px rgba(255,255,255,.25);
+--bigsh:0 0 8px rgba(255,255,255,.45),2px 0 0 rgba(255,80,80,.35),-2px 0 0 rgba(80,240,255,.35),3px 4px 0 rgba(10,20,90,.5)}
+
+:root{--hl:#FFD54A;--hltx:#16204f;--hlsh:none}
+.mi.sel,.row.sel{background:#FFD54A;color:#16204f}
+#bgfx{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;image-rendering:pixelated}
+.welcome{font-family:"DotGothic16",sans-serif;font-size:clamp(40px,17.2vw,118px)}  /* Jasmin picked font option d */
+.tv::after{background:radial-gradient(120% 90% at 50% 50%,transparent 60%,rgba(0,0,40,.45))}
+.tv.rgb{--osdsh:4px 0 0 rgba(255,40,90,.85),-4px 0 0 rgba(40,230,255,.85);--bigsh:7px 0 0 rgba(255,40,90,.85),-7px 0 0 rgba(40,230,255,.85)}
+.tv.rgb.flip{--osdsh:-3px 1px 0 rgba(255,40,90,.85),3px -1px 0 rgba(40,230,255,.85);--bigsh:-6px 2px 0 rgba(255,40,90,.85),6px -2px 0 rgba(40,230,255,.85)}
+.menu .wrap,.sec .wrap{background:rgba(36,66,204,.66);padding:14px 10px 12px;box-shadow:0 0 0 1px rgba(255,255,255,.14),0 0 28px 6px rgba(28,52,190,.55)}
+
+#s-articles .row:not(.back),#s-press .row:not(.back){grid-template-columns:22px minmax(0,1fr) auto;column-gap:10px}
+#s-articles .row:not(.back)::before,#s-press .row:not(.back)::before{content:"";grid-column:1;grid-row:1;align-self:start;width:22px;height:22px;margin-top:5px;
+ background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2011%2011%22%20shape-rendering%3D%22crispEdges%22%3E%3Crect%20x%3D%225%22%20y%3D%220%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%224%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%226%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%224%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%226%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%222%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%223%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%226%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%227%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%228%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%220%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%221%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%222%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%223%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%224%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%226%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%227%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%228%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%229%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%2210%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%222%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%223%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%224%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%227%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%228%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%224%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%226%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%226%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2011%2011%22%20shape-rendering%3D%22crispEdges%22%3E%3Crect%20x%3D%225%22%20y%3D%220%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%224%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%226%22%20y%3D%222%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%224%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%226%22%20y%3D%223%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%222%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%223%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%226%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%227%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%228%22%20y%3D%224%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%220%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%221%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%222%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%223%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%224%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%226%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%227%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%228%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%229%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%2210%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%222%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%223%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%224%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%227%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%228%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%224%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%226%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%226%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%229%22%20width%3D%221%22%20height%3D%221%22/%3E%3Crect%20x%3D%225%22%20y%3D%2210%22%20width%3D%221%22%20height%3D%221%22/%3E%3C/svg%3E") center/100% 100% no-repeat;filter:drop-shadow(0 0 2px rgba(255,255,255,.45))}
+#s-articles .row.sel::before,#s-press .row.sel::before{filter:none}
+#s-articles .row:not(.back) .t,#s-articles .row:not(.back) small,#s-press .row:not(.back) .t,#s-press .row:not(.back) small{grid-column:2}
+#s-articles .row:not(.back) .m,#s-press .row:not(.back) .m{grid-column:3}
+
+#s-articles .row:not(.back)::before,#s-press .row:not(.back)::before{color:#FFF6DC;animation:twk 2.4s steps(1) infinite}
+#s-articles li:nth-child(2) .row::before,#s-press li:nth-child(2) .row::before{animation-delay:-.8s}
+#s-articles li:nth-child(3) .row::before,#s-press li:nth-child(3) .row::before{animation-delay:-1.6s}
+#s-articles .row.sel::before,#s-press .row.sel::before{color:#16204f}
+@keyframes twk{0%{transform:scale(1);opacity:1}70%{transform:scale(.78);opacity:.75}80%{transform:scale(1.12);opacity:1}90%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){#s-articles .row::before,#s-press .row::before{animation:none!important}}
+
+
+html,body{-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
+.mi,.row,.press{touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.foot.tch{display:none}
+@media (hover:none) and (pointer:coarse){.foot.key{display:none}.foot.tch{display:flex}}
+.sec .row:not(.back){padding:9px 10px 8px}
+#s-articles .row:not(.back),#s-press .row:not(.back){grid-template-columns:22px minmax(0,1fr) auto;column-gap:10px;row-gap:3px;min-height:0}
+#s-articles .row:not(.back) .t,#s-press .row:not(.back) .t{grid-column:2/4;grid-row:1;font-size:var(--tsz);line-height:1.06;
+ display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;text-overflow:ellipsis}
+#s-articles .row:not(.back)::before,#s-press .row:not(.back)::before{margin-top:calc((var(--tsz)*1.06 - 22px)/2)}
+#s-articles .row:not(.back) small,#s-press .row:not(.back) small{grid-column:2;grid-row:2;margin:0;font-size:11.5px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#s-articles .row:not(.back) small br,#s-press .row:not(.back) small br{display:none}
+#s-articles .row:not(.back) .m,#s-press .row:not(.back) .m{grid-column:3;grid-row:2;align-self:center;font-size:18px;white-space:nowrap;max-width:0;overflow:hidden;opacity:0;transform:translateX(10px);
+ transition:max-width .25s steps(5),opacity .25s steps(3),transform .25s steps(3)}
+#s-articles .row.sel .m,#s-press .row.sel .m{max-width:9em;opacity:1;transform:none}
+#s-articles .m br,#s-press .m br{display:none}
+:root{--tsz:clamp(15px,calc(6.25vw - 6.6px),26px)}
+@media (prefers-reduced-motion:reduce){#s-articles .row .m,#s-press .row .m{transition:none}}
+html.demo #s-articles .row .m,html.demo #s-press .row .m{transition:none}
+</style></head><body>
+<div class="tv" id="tv">
+ <div class="bg" aria-hidden="true"></div>
+ <canvas id="bgfx" aria-hidden="true"></canvas>
+ <main class="stage" id="stage">
+  <section class="screen land on" id="land" aria-label="Welcome">
+   <div class="wrap">
+    <h1 class="welcome" aria-label="WELCOME TO SHIZUKA JASMINS PAGE"><span>WELCOME TO</span><span>SHIZUKA</span><span>JASMINS</span><span>PAGE</span></h1>
+    <p class="jpw" lang="ja">静華ジャズミンのページへようこそ</p>
+    <button class="press" id="play" type="button"><i class="tri r" aria-hidden="true"></i>PRESS PLAY</button>
+   </div>
+  </section>
+  <section class="screen menu" id="menu" aria-label="Menu">
+   <div class="wrap">
+    <h2 class="hd"><i></i><span>MENU</span><i></i></h2>
+    <p class="who">SHIZUKA JASMIN <span lang="ja">静華ジャズミン</span></p>
+    <ul class="list"><li><button class="mi" type="button" data-go="substack"><span>SUBSTACK</span><i class="tri r" aria-hidden="true"></i></button></li><li><button class="mi" type="button" data-go="articles"><span>ARTICLES</span><i class="tri r" aria-hidden="true"></i></button></li><li><button class="mi" type="button" data-go="press"><span>PRESS</span><i class="tri r" aria-hidden="true"></i></button></li><li><button class="mi" type="button" data-go="work"><span>WORK WITH ME</span><i class="tri r" aria-hidden="true"></i></button></li><li><button class="mi" type="button" data-go="agency"><span>AGENCY PROFILE</span><i class="tri r" aria-hidden="true"></i></button></li><li><button class="mi" type="button" data-go="insta"><span>INSTAGRAM</span><i class="tri r" aria-hidden="true"></i></button></li><li><button class="mi eject" type="button" data-go="land"><span>EJECT</span><i class="tri l" aria-hidden="true"></i></button></li></ul>
+    <div class="foot key" aria-hidden="true"><span>SELECT :<i class="tri u" aria-hidden="true"></i><i class="tri d" aria-hidden="true"></i> KEY</span><span>PLAY   :<i class="tri r" aria-hidden="true"></i> KEY / TAP</span><span>EJECT  :<i class="tri l" aria-hidden="true"></i> KEY</span></div><div class="foot tch" aria-hidden="true"><span>TAP     : PLAY</span><span>SWIPE <i class="tri r" aria-hidden="true"></i> : EJECT</span></div>
+   </div>
+  </section>
+  <section class="screen sec" id="s-substack" data-mode="SUBSTACK" aria-label="Substack"><div class="wrap"><h2 class="hd"><i></i><span>SUBSTACK</span><i></i></h2><ul class="list"><li><a class="row home" href="https://beforethelasttrain.substack.com/" target="_blank" rel="noopener"><span class="t">before.the.last.train&nbsp;↗</span><small>終電の前に — 移動のあいだの、ゆっくりした文章</small><small class="en">Slow notes from the in-between: trains, cities, and what lingers after arriving.</small><span class="m">My Substack / 個人の連載</span></a></li><li><a class="row" href="https://beforethelasttrain.substack.com/p/wandering-los-angeles" target="_blank" rel="noopener"><span class="t">Wandering Los Angeles</span><span class="m">’26</span></a></li><li><a class="row" href="https://beforethelasttrain.substack.com/p/warwick-avenue" target="_blank" rel="noopener"><span class="t">Warwick Avenue</span><span class="m">London</span></a></li><li><a class="row" href="https://beforethelasttrain.substack.com/p/such-was-how-summer-in-tokyo-began" target="_blank" rel="noopener"><span class="t">Fried Eggs in Tokyo</span><span class="m">Tokyo</span></a></li><li><button class="row back" type="button" data-go="menu"><i class="tri l" aria-hidden="true"></i>BACK TO MENU</button></li></ul><div class="foot key" aria-hidden="true"><span>SELECT :<i class="tri u" aria-hidden="true"></i><i class="tri d" aria-hidden="true"></i> KEY</span><span>OPEN   :<i class="tri r" aria-hidden="true"></i> KEY / TAP</span><span>BACK   :<i class="tri l" aria-hidden="true"></i> KEY</span></div><div class="foot tch" aria-hidden="true"><span>TAP     : SELECT</span><span>TAP x2  : OPEN</span><span>SWIPE <i class="tri r" aria-hidden="true"></i> : BACK</span></div></div></section><section class="screen sec" id="s-articles" data-mode="ARTICLES" aria-label="Articles 執筆"><div class="wrap"><h2 class="hd"><i></i><span>ARTICLES</span><i></i></h2><ul class="list"><li><a class="row" href="https://www.elle.com/jp/fashion/fashion-column/a60536965/fashion-report-by-jasmin-shizuka-2404/" target="_blank" rel="noopener"><span class="t">London vintage, before you buy new</span><small>ロンドン流、古着ファッションの楽しみ方</small><span class="m">ELLE Japan ’24</span></a></li><li><a class="row" href="https://gendai.media/articles/-/166668" target="_blank" rel="noopener"><span class="t">What I learned from a trip to the happiest country in the world</span><small>「世界一幸せな国」<br>フィンランドを目指した理由・前編</small><span class="m">FRaU ’26</span></a></li><li><a class="row" href="https://gendai.media/articles/-/166669" target="_blank" rel="noopener"><span class="t">Education through the 5 senses. What we can learn from the Finnish curriculum.</span><small>「世界一幸せな国」<br>フィンランドの教育の秘密・後編</small><span class="m">FRaU ’26</span></a></li><li><button class="row back" type="button" data-go="menu"><i class="tri l" aria-hidden="true"></i>BACK TO MENU</button></li></ul><div class="foot key" aria-hidden="true"><span>SELECT :<i class="tri u" aria-hidden="true"></i><i class="tri d" aria-hidden="true"></i> KEY</span><span>OPEN   :<i class="tri r" aria-hidden="true"></i> KEY / TAP</span><span>BACK   :<i class="tri l" aria-hidden="true"></i> KEY</span></div><div class="foot tch" aria-hidden="true"><span>TAP     : SELECT</span><span>TAP x2  : OPEN</span><span>SWIPE <i class="tri r" aria-hidden="true"></i> : BACK</span></div></div></section><section class="screen sec" id="s-press" data-mode="PRESS" aria-label="Press 掲載"><div class="wrap"><h2 class="hd"><i></i><span>PRESS</span><i></i></h2><ul class="list"><li><a class="row" href="https://www.womenshealthmag.com/jp/wellness/a64722167/jasmin-fiticons/" target="_blank" rel="noopener"><span class="t">Profile</span><small>Women’s Health Japan</small><span class="m">’25</span></a></li><li><a class="row" href="https://www.womenshealthmag.com/jp/fitness/a36842059/shizukajasmin-20210630/" target="_blank" rel="noopener"><span class="t">Sustainability in action. What does that even look like?</span><small>サステナブルとは？<br>行動してこそ自分のものになる</small><span class="m">’21</span></a></li><li><a class="row" href="https://www.tbsradio.jp/articles/66338/" target="_blank" rel="noopener"><span class="t">On learning &amp; teen worries</span><small>TBSラジオ<br>「これからの学びとティーンの悩み」</small><span class="m">radio</span></a></li><li><button class="row back" type="button" data-go="menu"><i class="tri l" aria-hidden="true"></i>BACK TO MENU</button></li></ul><div class="foot key" aria-hidden="true"><span>SELECT :<i class="tri u" aria-hidden="true"></i><i class="tri d" aria-hidden="true"></i> KEY</span><span>OPEN   :<i class="tri r" aria-hidden="true"></i> KEY / TAP</span><span>BACK   :<i class="tri l" aria-hidden="true"></i> KEY</span></div><div class="foot tch" aria-hidden="true"><span>TAP     : SELECT</span><span>TAP x2  : OPEN</span><span>SWIPE <i class="tri r" aria-hidden="true"></i> : BACK</span></div></div></section><section class="screen sec" id="s-work" data-mode="WORK" aria-label="Work with me お仕事のご依頼"><div class="wrap"><h2 class="hd"><i></i><span>WORK WITH ME</span><i></i></h2><ul class="list"><li><a class="row" href="mailto:info@nline-mg.com"><span class="t">info@nline-mg.com</span><small>メールでのお問い合わせ（NLINE）</small><span class="m">email</span></a></li><li><div class="row nolink soon" tabindex="0"><span class="t">MEDIA KIT — COMING SOON</span><small>メディアキット準備中</small></div></li><li><button class="row back" type="button" data-go="menu"><i class="tri l" aria-hidden="true"></i>BACK TO MENU</button></li></ul><div class="foot key" aria-hidden="true"><span>SELECT :<i class="tri u" aria-hidden="true"></i><i class="tri d" aria-hidden="true"></i> KEY</span><span>OPEN   :<i class="tri r" aria-hidden="true"></i> KEY / TAP</span><span>BACK   :<i class="tri l" aria-hidden="true"></i> KEY</span></div><div class="foot tch" aria-hidden="true"><span>TAP     : SELECT</span><span>TAP x2  : OPEN</span><span>SWIPE <i class="tri r" aria-hidden="true"></i> : BACK</span></div></div></section><section class="screen sec" id="s-agency" data-mode="AGENCY" aria-label="Agency profile 事務所プロフィール"><div class="wrap"><h2 class="hd"><i></i><span>AGENCY PROFILE</span><i></i></h2><ul class="list"><li><a class="row" href="https://nline-mg.com/model/shizuka-jasmin/" target="_blank" rel="noopener"><span class="t">Agency profile</span><small>事務所プロフィール</small><span class="m">NLINE</span></a></li><li><button class="row back" type="button" data-go="menu"><i class="tri l" aria-hidden="true"></i>BACK TO MENU</button></li></ul><div class="foot key" aria-hidden="true"><span>SELECT :<i class="tri u" aria-hidden="true"></i><i class="tri d" aria-hidden="true"></i> KEY</span><span>OPEN   :<i class="tri r" aria-hidden="true"></i> KEY / TAP</span><span>BACK   :<i class="tri l" aria-hidden="true"></i> KEY</span></div><div class="foot tch" aria-hidden="true"><span>TAP     : SELECT</span><span>TAP x2  : OPEN</span><span>SWIPE <i class="tri r" aria-hidden="true"></i> : BACK</span></div></div></section><section class="screen sec" id="s-insta" data-mode="INSTA" aria-label="Say hi on インスタグラム"><div class="wrap"><h2 class="hd"><i></i><span>INSTAGRAM</span><i></i></h2><ul class="list"><li><a class="row" href="https://www.instagram.com/shizukajasmin/" target="_blank" rel="noopener"><span class="t">@shizukajasmin&nbsp;↗</span><small>DM for socials</small><span class="m">IG</span></a></li><li><button class="row back" type="button" data-go="menu"><i class="tri l" aria-hidden="true"></i>BACK TO MENU</button></li></ul><div class="foot key" aria-hidden="true"><span>SELECT :<i class="tri u" aria-hidden="true"></i><i class="tri d" aria-hidden="true"></i> KEY</span><span>OPEN   :<i class="tri r" aria-hidden="true"></i> KEY / TAP</span><span>BACK   :<i class="tri l" aria-hidden="true"></i> KEY</span></div><div class="foot tch" aria-hidden="true"><span>TAP     : SELECT</span><span>TAP x2  : OPEN</span><span>SWIPE <i class="tri r" aria-hidden="true"></i> : BACK</span></div></div></section>
+ </main>
+ <canvas id="noise" aria-hidden="true"></canvas>
+ <div class="osd" aria-hidden="true">
+  <div class="c tl"><span>CH0</span><span class="mode"><i class="tri r" aria-hidden="true"></i><b>PLAY</b></span><span>0:00:00</span></div>
+  <div class="c tc"><span class="play"><i class="tri r big" aria-hidden="true"></i></span><span class="ff"><i class="tri r big" aria-hidden="true"></i><i class="tri r big" aria-hidden="true"></i></span></div>
+  <div class="c tr"><span>TAPE</span><span class="rec"><i class="dot"></i>REC</span><span class="ctr">0:00:01</span></div>
+  <div class="c bl"><span>TV<i class="tri r" aria-hidden="true"></i></span><span>SRC</span></div>
+  <div class="c br"><span>LP<i class="tri l" aria-hidden="true"></i></span><span>DST</span></div>
+  
+ </div>
+</div>
+<script>window.VCFG={"tr": 800, "jit": 1.6, "tear": 0.06, "tearAmt": 10, "skew": 0.6, "burst": 0, "burstLen": 0, "lines": 0, "pinkLine": 0, "band": 0, "bandH": 0.05, "snowBlue": 30, "bgfx": {"period": 2000, "calm": 700, "dmin": 220, "dmax": 520, "snowA": 0.8, "hop": 9, "tearX": 34, "tearSk": 3}, "touch": 1, "demo": {"press": 3500, "msel": [4000, 4900], "open": 6000, "sec": "articles", "ssel": [0, 7300, 8300]}};</script><script>
+(function(){
+document.documentElement.classList.add('js');
+const Q=new URLSearchParams(location.search), DEMO=Q.has('demo');
+const RM=!DEMO&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+const C=window.VCFG, TR=C.tr;
+const $=s=>document.querySelector(s), $$=(s,r)=>[...(r||document).querySelectorAll(s)];
+const tv=$('#tv'), stage=$('#stage'), cv=$('#noise'), cx=cv.getContext('2d'), ctr=$('.ctr'), modeB=$('.mode b');
+let W=1,H=1; function size(){W=cv.width=Math.ceil(innerWidth/3);H=cv.height=Math.ceil(innerHeight/3);} size(); addEventListener('resize',size);
+function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const scr={land:$('#land'),menu:$('#menu')}; $$('.screen.sec').forEach(s=>scr[s.id.slice(2)]=s);
+const S={screen:'land',sel:0,msel:0,trans:-TR/2,next:null};
+const items=()=>$$('.mi,.row',scr[S.screen]);
+function mark(){items().forEach((e,i)=>e.classList.toggle('sel',i===S.sel))}
+function focusSel(){if(DEMO)return;const e=items()[S.sel];if(e)e.focus({preventScroll:true});if(e&&e.scrollIntoView)e.scrollIntoView({block:'nearest'})}
+function show(n){
+  if(S.screen==='menu'&&n!=='menu')S.msel=S.sel;
+  S.screen=n;for(const k in scr)scr[k].classList.toggle('on',k===n);
+  S.sel=n==='menu'?S.msel:0;stage.scrollTop=0;
+  modeB.textContent=n==='land'?'PLAY':n==='menu'?'MENU':scr[n].dataset.mode;
+  mark();
+}
+function go(n){if(RM){show(n);focusSel();return}if(S.next)return;S.trans=now();S.next=n}
+let t0=performance.now();const now=()=>performance.now()-t0;
+function back(){if(S.screen==='menu')go('land');else if(S.screen!=='land')go('menu')}
+$('#play').addEventListener('click',()=>go('menu'));
+$$('.mi').forEach((b,i)=>b.addEventListener('click',()=>{S.sel=i;mark();go(b.dataset.go)}));
+$$('.row.back').forEach(b=>b.addEventListener('click',()=>go('menu')));
+document.addEventListener('keydown',e=>{
+  if(S.next)return;const k=e.key;
+  if(S.screen==='land'){if(k==='ArrowRight'||k==='Enter'||k===' '){if(document.activeElement!==$('#play')||k==='ArrowRight'){e.preventDefault();go('menu')}}return}
+  const it=items();
+  if(k==='ArrowDown'||k==='ArrowUp'){e.preventDefault();S.sel=(S.sel+(k==='ArrowDown'?1:-1)+it.length)%it.length;mark();focusSel()}
+  else if(k==='ArrowRight'){e.preventDefault();it[S.sel]&&it[S.sel].click()}
+  else if(k==='ArrowLeft'||k==='Escape'||k==='Backspace'){e.preventDefault();back()}
+});
+document.addEventListener('focusin',e=>{const i=items().indexOf(e.target);if(i>=0&&i!==S.sel){S.sel=i;mark()}});
+document.addEventListener('pointerover',e=>{if(e.pointerType!=='mouse')return;const t=e.target.closest&&e.target.closest('.mi,.row');const i=items().indexOf(t);if(i>=0&&i!==S.sel){S.sel=i;mark()}});
+const pad=n=>String(n).padStart(2,'0');
+function counter(t){const s=1+Math.floor(Math.max(0,t)/1000);ctr.textContent=Math.floor(s/3600)+':'+pad(Math.floor(s/60)%60)+':'+pad(s%60)}
+const bcv=C.bgfx&&$('#bgfx'), bx=bcv&&bcv.getContext('2d');let BW=1,BH=1;
+function bsize(){if(!bcv)return;BW=bcv.width=Math.ceil(innerWidth/3);BH=bcv.height=Math.ceil(innerHeight/3)} bsize(); addEventListener('resize',bsize);
+let FX={};
+// end-of-tape glitch bursts with calm gaps: snow, vertical roll/hop, RGB split, tear/warp, blue-screen flash
+function glitch(t){
+  const g=C.bgfx,P=g.period,seg=Math.floor(t/P),u=t%P,r=rng(seg*97+13);
+  const o=g.calm+r()*(P-g.calm-700),dur=g.dmin+r()*(g.dmax-g.dmin);
+  const kinds=['snow','roll','rgb','blue','tear'],k=kinds[seg%5];
+  const fx={on:false};if(RM||u<o||u>o+dur)return fx;
+  const p=(u-o)/dur;fx.on=true;fx.k=k;fx.p=p;fx.rgb=k==='rgb'||r()<.45;fx.snow=k==='snow'?1:(r()<.35?.55:0);
+  if(k==='roll')fx.hop=Math.sin(p*Math.PI)*(r()<.5?-1:1)*g.hop;
+  if(k==='tear'){fx.jx=(r()-.5)*g.tearX;fx.sk=(r()-.5)*g.tearSk}
+  if(k==='blue')fx.blue=p<.7?1:(1-p)/.3;
+  return fx;
+}
+function bg(t){
+  if(!bx)return;const fx=FX=glitch(t);bx.clearRect(0,0,BW,BH);
+  if(!fx.on)return;const n=rng(Math.floor(t/50)*13+5);
+  if(fx.snow){const a=fx.snow*C.bgfx.snowA*255,img=bx.createImageData(BW,BH),d=img.data;
+    for(let i=0;i<d.length;i+=4){const v=n()*255|0;d[i]=v*.85;d[i+1]=v*.9;d[i+2]=Math.min(255,v+40);d[i+3]=a}bx.putImageData(img,0,0)}
+  if(fx.blue){bx.fillStyle='rgba(24,56,232,'+(.95*fx.blue).toFixed(2)+')';bx.fillRect(0,0,BW,BH)}
+}
+function draw(t){
+  counter(t);
+  if(C.bgfx)bg(RM?0:t);
+  if(RM){tv.classList.remove('blink','pblink','ffw');stage.style.transform='';stage.style.opacity='';return}
+  tv.classList.toggle('blink',t%1000>620);
+  tv.classList.toggle('pblink',S.screen==='land'&&t>1200&&t%1100>760);
+  const dt=t-S.trans, inT=dt>=0&&dt<TR;
+  tv.classList.toggle('ffw',inT);
+  let snow=0,roll=0,op=1;
+  if(inT){if(dt<TR/2){snow=Math.min(1,dt/140);op=Math.max(0,1-dt/120)}else{const p=(dt-TR/2)/(TR/2);snow=Math.max(0,1-p*1.4);roll=(1-p)*(1-p)}}
+  const r=rng(Math.floor(t/80)*7+3);
+  let jx=(r()-.5)*C.jit, sk=0;
+  const burst=C.burst&&(t%C.burst)<C.burstLen;
+  if(r()<C.tear||burst){jx+=(r()-.5)*C.tearAmt;sk=(r()-.5)*C.skew}
+  if(inT)jx+=(r()-.5)*24;
+  let hop=0;if(FX.on){jx+=FX.jx||0;sk+=FX.sk||0;hop=FX.hop||0;if(FX.k==='tear'||FX.rgb)jx+=(r()-.5)*8;if(FX.blue)op=Math.min(op,1-.75*FX.blue)}
+  tv.classList.toggle('rgb',!!(FX.on&&FX.rgb));tv.classList.toggle('flip',!!(FX.on&&FX.rgb&&r()<.5));
+  stage.style.transform='translate('+jx.toFixed(1)+'px,'+(-roll*22+hop).toFixed(1)+'vh) skewX('+sk.toFixed(2)+'deg)';
+  stage.style.opacity=op;
+  // noise
+  const n=rng(Math.floor(t/45)+11);
+  if(snow>0){const img=cx.createImageData(W,H),d=img.data;for(let i=0;i<d.length;i+=4){const v=n()*255|0;d[i]=v;d[i+1]=v;d[i+2]=Math.min(255,v+C.snowBlue);d[i+3]=snow*235}cx.putImageData(img,0,0)}else cx.clearRect(0,0,W,H);
+  const lines=C.lines*(burst?3:1);
+  for(let i=0;i<lines;i++){const y=n()*H|0,x=n()*W|0,l=(n()*W*.45)|0;cx.fillStyle=(n()<C.pinkLine?'rgba(255,120,200,':'rgba(255,255,255,')+(.18+n()*.55).toFixed(2)+')';cx.fillRect(x,y,l,1)}
+  if(C.band){const bp=(t%C.band)/C.band, by=H*(1.15-bp*1.35), bh=Math.max(4,H*C.bandH);
+  cx.fillStyle='rgba(10,20,80,.18)';cx.fillRect(0,by,W,bh);
+  for(let k=0;k<W*bh*.06;k++){cx.fillStyle=n()<.6?'rgba(255,255,255,'+(.3+n()*.6).toFixed(2)+')':'rgba(0,0,30,.4)';cx.fillRect(n()*W|0,(by+n()*bh)|0,1+(n()*7|0),1)}}
+  if(burst){for(let k=0;k<6;k++){cx.fillStyle=n()<.5?'rgba(255,95,168,.55)':'rgba(120,220,255,.45)';cx.fillRect(n()*W|0,n()*H|0,(n()*W*.5)|0,1+(n()*3|0))}}
+  if(C.date){const d=$('.date');if(d&&!d.dataset.set){d.dataset.set=1;}}
+}
+if(C.touch){
+  if(DEMO)document.documentElement.classList.add('demo');
+  // touch: menu = single tap opens; section link rows = 1st tap highlights (shows meta), 2nd tap opens. Swipe: <- finger right = back, finger left = play/open.
+  let downSel=null,sx=0,sy=0,st=0,swiped=false;
+  document.addEventListener('pointerdown',e=>{const r=e.target.closest&&e.target.closest('.sec a.row');downSel=r?r.classList.contains('sel'):null},true);
+  $$('.sec a.row').forEach(a=>a.addEventListener('click',e=>{
+    if(swiped){e.preventDefault();return}
+    if(downSel===false){e.preventDefault();const i=items().indexOf(a);if(i>=0){S.sel=i;mark()}}
+    downSel=null}));
+  $$('.sec .row.nolink').forEach(a=>a.addEventListener('click',()=>{const i=items().indexOf(a);if(i>=0){S.sel=i;mark()}}));
+  $('#land').addEventListener('click',e=>{if(!e.target.closest('#play'))go('menu')});
+  stage.addEventListener('touchstart',e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;st=Date.now();swiped=false},{passive:true});
+  stage.addEventListener('touchend',e=>{const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Date.now()-st<700&&Math.abs(dx)>60&&Math.abs(dx)>1.6*Math.abs(dy)){swiped=true;setTimeout(()=>swiped=false,400);
+      if(dx>0)back();else if(S.screen==='land')go('menu');else if(S.screen==='menu'){const it=items()[S.sel];it&&it.click()}}},{passive:true});
+}
+function tick(){const t=now();if(S.next&&t-S.trans>=TR/2){const n=S.next;S.next=null;show(n);focusSel()}draw(t);requestAnimationFrame(tick)}
+show('land');
+if(C.date&&!DEMO){const d=$('.date');try{d.textContent=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tokyo',month:'short',day:'numeric',year:'numeric'}).format(new Date()).toUpperCase().replace(',','')}catch(e){}}
+if(DEMO){
+  window.__show=(n,sel)=>{show(n);if(sel!=null){S.sel=sel;mark()}};
+  window.__render=function(t){
+    const D=C.demo;let s='land',sel=0;S.trans=-TR/2;
+    $('#play').classList.toggle('pressed',t>=D.press&&t<D.press+300);
+    if(t>=D.press+300)S.trans=D.press+300;
+    if(t>=D.press+300+TR/2){s='menu';sel=D.msel.filter(x=>t>=x).length-1;if(sel<0)sel=0}
+    if(t>=D.open)S.trans=D.open;
+    if(t>=D.open+TR/2){s=D.sec;sel=D.ssel.filter(x=>t>=x).length-1;if(sel<0)sel=0}
+    if(S.screen!==s)show(s);
+    if(S.screen==='menu')S.msel=sel;
+    S.sel=sel;mark();
+    items().forEach(e=>e.classList.toggle('pressed',S.screen==='menu'&&t>=D.open-300&&t<D.open&&e.classList.contains('sel')));
+    draw(t);
+  };
+  window.__render(0);
+}else if(RM){show('land');draw(0);setInterval(()=>counter(now()),1000)}
+else requestAnimationFrame(tick);
+})();
+</script>
+</body></html>
